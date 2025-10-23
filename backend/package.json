@@ -1,0 +1,29 @@
+{
+  "name": "sistema-inventario-backend",
+  "version": "1.0.0",
+  "description": "Backend para Sistema de Inventario - Node.js + Express + SQLite3",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "init-db": "node scripts/init-database.js"
+  },
+  "keywords": [
+    "inventario",
+    "express",
+    "sqlite3"
+  ],
+  "author": "Sistema Inventario",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^7.0.9",
+    "sqlite3": "^5.1.7"
+  }
+}
