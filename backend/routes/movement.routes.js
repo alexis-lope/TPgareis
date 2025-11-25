@@ -74,10 +74,12 @@ router.post(
         return res.status(404).json({ success: false, message: "Producto no encontrado" })
       }
 
-      let nuevoStock = producto.stock_actual
+      let stockActual = Number(producto.stock_actual)
+      let cantidadNum = Number(cantidad)
+      let nuevoStock = stockActual
 
       if (tipo_movimiento === "entrada") {
-        nuevoStock += cantidad
+        nuevoStock += cantidadNum
       } else if (tipo_movimiento === "salida") {
         if (producto.stock_actual < cantidad) {
           return res.status(400).json({

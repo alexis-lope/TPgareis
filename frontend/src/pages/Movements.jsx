@@ -18,7 +18,7 @@ const Movements = () => {
   const [formData, setFormData] = useState({
     producto_id: "",
     tipo_movimiento: "entrada",
-    cantidad: "",
+    cantidad: 0,
     motivo: "",
   })
 
@@ -63,7 +63,7 @@ const Movements = () => {
 
   const closeModal = () => {
     setShowModal(false)
-    setFormData({ producto_id: "", tipo_movimiento: "entrada", cantidad: "", motivo: "" })
+    setFormData({ producto_id: "", tipo_movimiento: "entrada", cantidad: 0, motivo: "" })
   }
 
   const getMovementIcon = (tipo) => {
