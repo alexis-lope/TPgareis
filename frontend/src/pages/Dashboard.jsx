@@ -3,7 +3,20 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { Package, FolderTree, Truck, AlertTriangle, DollarSign, TrendingUp } from "lucide-react"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts"
+import Logo from "../pages/img/Logo.png"
+
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts"
 import api from "../services/api"
 import { toast } from "sonner"
 
@@ -46,62 +59,29 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Vista General del Sistema</h1>
         <p className="text-muted-foreground">Resumen general del inventario</p>
       </div>
 
-      {/* Tarjetas de estadísticas */}
+      {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <StatCard
-          icon={Package}
-          title="Total Productos"
-          value={stats?.totalProductos || 0}
-          color="bg-primary"
-          link="/products"
-        />
-        <StatCard
-          icon={FolderTree}
-          title="Categorías"
-          value={stats?.totalCategorias || 0}
-          color="bg-accent"
-          link="/categories"
-        />
-        <StatCard
-          icon={Truck}
-          title="Proveedores"
-          value={stats?.totalProveedores || 0}
-          color="bg-secondary"
-          link="/suppliers"
-        />
-        <StatCard
-          icon={AlertTriangle}
-          title="Stock Bajo"
-          value={stats?.productosStockBajo || 0}
-          color="bg-destructive"
-          link="/alerts"
-        />
-        <StatCard
-          icon={DollarSign}
-          title="Valor Inventario"
-          value={`$${(stats?.valorInventario || 0).toFixed(2)}`}
-          color="bg-accent"
-        />
-        <StatCard
-          icon={TrendingUp}
-          title="Alertas Pendientes"
-          value={stats?.alertasNoLeidas || 0}
-          color="bg-destructive"
-          link="/alerts"
-        />
+        <StatCard icon={Package} title="Total Productos" value={stats?.totalProductos || 0} color="bg-blue-600" link="/products" />
+        <StatCard icon={FolderTree} title="Categorías" value={stats?.totalCategorias || 0} color="bg-indigo-600" link="/categories" />
+        <StatCard icon={Truck} title="Proveedores" value={stats?.totalProveedores || 0} color="bg-green-600" link="/suppliers" />
+        <StatCard icon={AlertTriangle} title="Stock Bajo" value={stats?.productosStockBajo || 0} color="bg-yellow-600" link="/alerts" />
+        <StatCard icon={DollarSign} title="Valor Inventario" value={`$${(stats?.valorInventario || 0).toFixed(2)}`} color="bg-emerald-600" />
+        <StatCard icon={TrendingUp} title="Alertas Pendientes" value={stats?.alertasNoLeidas || 0} color="bg-red-600" link="/alerts" />
       </div>
 
-      {/* Gráficos */}
+      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Productos más vendidos */}
-        <div className="bg-card border border-border rounded-lg p-6">
+        {/* Top Products */}
+        <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-lg transition">
           <h2 className="text-xl font-semibold mb-4">Productos Más Vendidos (30 días)</h2>
+
           {topProducts.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={topProducts}>
@@ -112,7 +92,7 @@ const Dashboard = () => {
                   contentStyle={{ backgroundColor: "#141414", border: "1px solid #27272a" }}
                   labelStyle={{ color: "#fafafa" }}
                 />
-                <Bar dataKey="total_salidas" fill="#3b82f6" />
+                <Bar dataKey="total_salidas" fill="#3b82f6" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           ) : (
@@ -120,9 +100,10 @@ const Dashboard = () => {
           )}
         </div>
 
-        {/* Stock por categoría */}
-        <div className="bg-card border border-border rounded-lg p-6">
+        {/* Stock by Category */}
+        <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-lg transition">
           <h2 className="text-xl font-semibold mb-4">Stock por Categoría</h2>
+
           {stockByCategory.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
@@ -132,11 +113,11 @@ const Dashboard = () => {
                   nameKey="categoria"
                   cx="50%"
                   cy="50%"
-                  outerRadius={100}
+                  outerRadius={110}
                   label
                 >
                   {stockByCategory.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    <Cell key={index} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip
@@ -156,9 +137,11 @@ const Dashboard = () => {
 
 const StatCard = ({ icon: Icon, title, value, color, link }) => {
   const content = (
-    <div className={`${color} rounded-lg p-6 text-white transition-transform hover:scale-105`}>
+    <div
+      className={`${color} rounded-xl p-6 text-white shadow-md hover:shadow-xl transition-transform hover:scale-[1.03] cursor-pointer`}
+    >
       <div className="flex items-center justify-between mb-4">
-        <Icon size={32} />
+        <Icon size={34} className="opacity-90" />
         <span className="text-3xl font-bold">{value}</span>
       </div>
       <h3 className="text-lg font-medium opacity-90">{title}</h3>
