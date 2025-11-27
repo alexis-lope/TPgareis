@@ -121,9 +121,22 @@ const Dashboard = () => {
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{ backgroundColor: "#141414", border: "1px solid #27272a" }}
-                  labelStyle={{ color: "#fafafa" }}
-                />
+  contentStyle={{
+    backgroundColor: "#ffffff",
+    border: "1px solid #e4e4e7",
+    borderRadius: "10px",
+    padding: "10px",
+    color: "#000000",
+  }}
+  labelStyle={{
+    color: "#000000",
+    fontWeight: "600"
+  }}
+  itemStyle={{
+    color: "#000000"
+  }}
+/>
+
               </PieChart>
             </ResponsiveContainer>
           ) : (
@@ -141,7 +154,7 @@ const StatCard = ({ icon: Icon, title, value, color, link }) => {
       className={`${color} rounded-xl p-6 text-white shadow-md hover:shadow-xl transition-transform hover:scale-[1.03] cursor-pointer`}
     >
       <div className="flex items-center justify-between mb-4">
-        <Icon size={34} className="opacity-90" />
+        <Icon size={34} className="opacity-100 animate-pulse" />
         <span className="text-3xl font-bold">{value}</span>
       </div>
       <h3 className="text-lg font-medium opacity-90">{title}</h3>
