@@ -2,6 +2,7 @@ import express from "express"
 import { body, validationResult } from "express-validator"
 import { getQuery, allQuery, runQuery } from "../config/database.js"
 import { authenticate, authorize } from "../middleware/auth.middleware.js"
+import { notifyAdminsStockBajo } from "../utils/email.service.js"
 
 const router = express.Router()
 
@@ -31,7 +32,10 @@ router.get("/", authenticate, async (req, res, next) => {
       [...params, Number.parseInt(limit), offset],
     )
 
-    const totalResult = await getQuery(`SELECT COUNT(*) as total FROM movimientos_inventario m ${whereClause}`, params)
+    const totalResult = await getQuery(
+      `SELECT COUNT(*) as total FROM movimientos_inventario m ${whereClause}`,
+      params
+    )
 
     res.json({
       success: true,
@@ -68,7 +72,10 @@ router.post(
 
       const { producto_id, tipo_movimiento, cantidad, motivo } = req.body
 
-      const producto = await getQuery("SELECT stock_actual, stock_minimo FROM productos WHERE id = ?", [producto_id])
+      const producto = await getQuery(
+        "SELECT nombre, stock_actual, stock_minimo FROM productos WHERE id = ?",
+        [producto_id]
+      )
 
       if (!producto) {
         return res.status(404).json({ success: false, message: "Producto no encontrado" })
@@ -96,21 +103,35 @@ router.post(
         `INSERT INTO movimientos_inventario 
          (producto_id, tipo_movimiento, cantidad, motivo, usuario_id, stock_anterior, stock_nuevo)
          VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [producto_id, tipo_movimiento, cantidad, motivo, req.user.id, producto.stock_actual, nuevoStock],
+        [producto_id, tipo_movimiento, cantidad, motivo, req.user.id, producto.stock_actual, nuevoStock]
       )
 
-      await runQuery("UPDATE productos SET stock_actual = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?", [
-        nuevoStock,
-        producto_id,
-      ])
+      await runQuery(
+        "UPDATE productos SET stock_actual = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?",
+        [nuevoStock, producto_id]
+      )
 
-      // Crear alerta si el stock está bajo
+      // ========================================================
+      // 🔥 DETECTAR STOCK BAJO Y ENVIAR ALERTA Y EMAIL
+      // ========================================================
       if (nuevoStock <= producto.stock_minimo) {
+
+        // Guardar alerta
         await runQuery(
           `INSERT INTO alertas (producto_id, tipo_alerta, mensaje)
            VALUES (?, 'stock_bajo', ?)`,
-          [producto_id, `El stock del producto está por debajo del mínimo (${nuevoStock}/${producto.stock_minimo})`],
+          [
+            producto_id,
+            `El stock del producto '${producto.nombre}' está por debajo del mínimo (${nuevoStock}/${producto.stock_minimo})`
+          ]
         )
+
+        // Obtener emails de todos los usuarios
+        const usuarios = await allQuery("SELECT email FROM usuarios")
+        const emails = usuarios.map(u => u.email)
+
+        // Enviar email masivo
+        await notifyAdminsStockBajo(emails, producto.nombre, nuevoStock, producto.stock_minimo)
       }
 
       res.status(201).json({
