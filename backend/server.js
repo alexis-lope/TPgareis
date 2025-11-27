@@ -1,6 +1,9 @@
 import express from "express"
 import cors from "cors"
 import dotenv from "dotenv"
+import path from "path"
+import { fileURLToPath } from "url"
+
 import authRoutes from "./routes/auth.routes.js"
 import userRoutes from "./routes/user.routes.js"
 import productRoutes from "./routes/product.routes.js"
@@ -10,7 +13,24 @@ import movementRoutes from "./routes/movement.routes.js"
 import dashboardRoutes from "./routes/dashboard.routes.js"
 import { errorHandler } from "./middleware/error.middleware.js"
 
-dotenv.config()
+// --------------------------------------------------------------------
+// 🔥 Cargar dotenv con ruta explícita (FIX DEFINITIVO)
+// --------------------------------------------------------------------
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+dotenv.config({
+  path: path.join(__dirname, ".env"),
+})
+
+// DEBUG para comprobar variables cargadas
+console.log("🔍 ENV LOADED:")
+console.log("EMAIL_HOST =", process.env.EMAIL_HOST)
+console.log("EMAIL_PORT =", process.env.EMAIL_PORT)
+console.log("EMAIL_USER =", process.env.EMAIL_USER)
+console.log("EMAIL_PASS =", process.env.EMAIL_PASS ? "OK" : "VACÍA")
+
+// --------------------------------------------------------------------
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -22,6 +42,7 @@ app.use(
     credentials: true,
   }),
 )
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
