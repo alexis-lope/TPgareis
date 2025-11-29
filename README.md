@@ -110,9 +110,6 @@ sistema-inventario/
 ### Frontend
 
 * **Kevin Mamani:** Estructura y cuerpo del frontend
-
-### Estilo y Diseño
-
 * **Alexis López:** Teoría de colores, animaciones y estilo
 
 ## Licencia
