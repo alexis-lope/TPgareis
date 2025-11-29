@@ -104,13 +104,21 @@ sistema-inventario/
 
 ### Documentación
 
-* **Kevin Mamani:** Documentación general
-* **Alexis López:** Diagramas, objetivos, metas y funcionamiento del sistema
+* **Kevin Mamani:** Diagramas
+* **Alexis López:** objetivos, metas y funcionamiento del sistema
 
 ### Frontend
 
 * **Kevin Mamani:** Estructura y cuerpo del frontend
 * **Alexis López:** Teoría de colores, animaciones y estilo
+
+### Backend
+
+* **Kevin Mamani:** Desarrollo completo del backend
+
+### Marketing
+
+* **Alexis López:** Estrategias y material de presentación del proyecto
 
 ## Licencia
 
