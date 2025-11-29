@@ -4,61 +4,62 @@ Sistema web completo para la gestión de inventarios desarrollado con React y No
 
 ## Características Principales
 
-- Autenticación y autorización con JWT
-- Gestión completa de productos, categorías y proveedores
-- Control de movimientos de inventario (entradas, salidas, ajustes)
-- Sistema de alertas automáticas de stock bajo
-- Dashboard con estadísticas y gráficos
-- Panel de administración de usuarios
-- Recuperación de contraseña por email
-- Diseño responsivo y moderno
+* Autenticación y autorización con JWT
+* Gestión completa de productos, categorías y proveedores
+* Control de movimientos de inventario (entradas, salidas, ajustes)
+* Sistema de alertas automáticas de stock bajo
+* Dashboard con estadísticas y gráficos
+* Panel de administración de usuarios
+* Recuperación de contraseña por email
+* Diseño responsivo y moderno
 
 ## Tecnologías
 
 **Frontend:**
-- React 18.3
-- Vite 5.1
-- React Router 6.22
-- Tailwind CSS 4
-- Recharts
-- Axios
+
+* React 18.3
+* Vite 5.1
+* React Router 6.22
+* Tailwind CSS 4
+* Recharts
+* Axios
 
 **Backend:**
-- Node.js 18+
-- Express 4.18
-- SQLite3 5.1
-- JWT
-- Bcrypt
-- Nodemailer
+
+* Node.js 18+
+* Express 4.18
+* SQLite3 5.1
+* JWT
+* Bcrypt
+* Nodemailer
 
 ## Instalación Rápida
 
 ### Backend
 
-\`\`\`bash
+```bash
 cd backend
 npm install
-npm run init-db
-npm run dev
-\`\`\`
+node server
+```
 
 ### Frontend
 
-\`\`\`bash
+```bash
 cd frontend
 npm install
 npm run dev
-\`\`\`
+```
 
 ## Acceso por Defecto
 
-- **URL**: http://localhost:5173
-- **Email**: admin@inventario.com
-- **Password**: admin123
+* **URL**: [http://localhost:5173](http://localhost:5173)
+* **Email**: [admin@inventario.com](mailto:admin@inventario.com)
+* **Password**: admin123
 
 ## Estructura del Proyecto
 
-\`\`\`
+```
 sistema-inventario/
 ├── backend/
 │   ├── config/          # Configuración de BD
@@ -77,34 +78,43 @@ sistema-inventario/
 │   │   └── App.jsx      # Componente principal
 │   └── index.html
 │
-└── DOCUMENTACION_TECNICA.md
-\`\`\`
+└── README.md
+```
 
 ## Roles y Permisos
 
 ### Admin
-- Acceso completo al sistema
-- Gestión de usuarios
-- Eliminación de registros
+
+* Acceso completo al sistema
+* Gestión de usuarios
+* Eliminación de registros
 
 ### Gestor
-- CRUD de productos, categorías y proveedores
-- Registro de movimientos
-- Visualización de reportes
+
+* CRUD de productos, categorías y proveedores
+* Registro de movimientos
+* Visualización de reportes
 
 ### Usuario
-- Solo lectura de productos y categorías
-- Visualización de perfil
 
-## Documentación
+* Solo lectura de productos y categorías
+* Visualización de perfil
 
-Ver `DOCUMENTACION_TECNICA.md` para:
-- Diccionario de datos
-- Diagramas ER y de secuencia
-- Casos de uso
-- Manual de usuario completo
-- Guía de instalación detallada
+## División del Trabajo
+
+### Documentación
+
+* **Kevin Mamani:** Documentación general
+* **Alexis López:** Diagramas, objetivos, metas y funcionamiento del sistema
+
+### Frontend
+
+* **Kevin Mamani:** Estructura y cuerpo del frontend
+
+### Estilo y Diseño
+
+* **Alexis López:** Teoría de colores, animaciones y estilo
 
 ## Licencia
 
-Proyecto académico - Curso 7°2 - Grupo 7.4
+Proyecto - Curso 7°2 - Grupo 7.4
