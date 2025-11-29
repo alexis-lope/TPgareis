@@ -126,12 +126,9 @@ router.post(
           ]
         )
 
-        // Obtener emails de todos los usuarios
-        const usuarios = await allQuery("SELECT email FROM usuarios")
-        const emails = usuarios.map(u => u.email)
-
+      
         // Enviar email masivo
-        await notifyAdminsStockBajo(emails, producto.nombre, nuevoStock, producto.stock_minimo)
+        await notifyAdminsStockBajo(producto.nombre, nuevoStock, producto.stock_minimo)
       }
 
       res.status(201).json({
